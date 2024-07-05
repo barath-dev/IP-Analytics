@@ -1,95 +1,96 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+//get the ip of the user
+async function getIP() {
 
-export default function Home() {
+
+  const response = await fetch('https://api.ipify.org?format=json',{cache: "no-store"});
+  const data = await response.json();
+  const response2 = await fetch(`https://ipapi.co/${data.ip}/json/`);
+  const data2 = await response2.json();
+  return data2;
+
+}
+
+async function fetchDB(){
+  const response = await fetch(`${process.env.POCKETBASE_URL}/api/collections/IP_Details/records`,{cache: "no-cache",headers:{
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${process.env.POCKETBASE_TOKEN}`
+  }});
+  const data = await response.json();
+  console.log(data);
+
+  return data.items;
+}
+
+async function putIpDetails(data:any){
+  const db  = fetchDB();
+  const response = await fetch(`${process.env.POCKETBASE_URL}/api/collections/IP_Details/records`,{
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${process.env.POCKETBASE_TOKEN}`
+    },
+    body: JSON.stringify(data)
+  });
+  const data2 = await response.json();
+  console.log(data2);
+}
+
+
+
+
+async function storeIP() {
+  
+}
+
+
+
+export default async function Home() {
+
+  const ipDetails = await getIP();
+  // getDeviceData();
+  const db  = await fetchDB();
+  const str = JSON.stringify(ipDetails, null, 2);
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <div>
+      <h1>IP Analytics</h1>
+      <p>Check your IP address and see your location</p>
+      <table className="table">
+        <tr>
+          <th>IP Address</th>
+          <th>City</th>
+          <th>Region</th>
+          <th>Country</th>
+          <th>Postal</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>Timezone</th>
+          <th>Org</th>
+        </tr>
+        <tr>
+          <td>{ipDetails.ip}</td>
+          <td>{ipDetails.city}</td>
+          <td>{ipDetails.region}</td>
+          <td>{ipDetails.country_name}</td>
+          <td>{ipDetails.postal}</td>
+          <td>{ipDetails.latitude}</td>
+          <td>{ipDetails.longitude}</td>
+          <td>{ipDetails.timezone}</td>
+          <td>{ipDetails.org}</td>
+        </tr>
+        {db.map((item:any) => (
+          <tr>
+            <td>{item.ip}</td>
+            <td>{item.city}</td>
+            <td>{item.region}</td>
+            <td>{item.country}</td>
+            <td>{item.postal_code}</td>
+            <td>{item.latitude}</td>
+            <td>{item.longitude}</td>
+            <td>{item.timezone}</td>
+            <td>{item.org}</td>
+          </tr>
+        ))}
+      </table>
+    </div>
   );
 }
