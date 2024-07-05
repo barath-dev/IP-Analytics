@@ -77,7 +77,7 @@ export default async function Home() {
           <td>{ipDetails.timezone}</td>
           <td>{ipDetails.org}</td>
         </tr>
-        {db.map((item:any) => (
+        {/* {db.map((item:any) => (
           <tr>
             <td>{item.ip}</td>
             <td>{item.city}</td>
@@ -89,7 +89,7 @@ export default async function Home() {
             <td>{item.timezone}</td>
             <td>{item.org}</td>
           </tr>
-        ))}
+        ))} */}
       </table>
     </div>
   );
