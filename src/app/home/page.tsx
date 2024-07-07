@@ -1,5 +1,4 @@
-export default async function Analytics() {
-  //return 6 tables , two tables a row and 3 rows
+export default function Analytics() {
   return (
     <div>
       <h1 style={{textAlign:"center"}}>Analytics</h1>
@@ -9,7 +8,7 @@ export default async function Analytics() {
             <td>
               <table>
                 <thead>
-                  
+                  HEading
                 </thead>
               </table>
             </td>
