@@ -1,4 +1,4 @@
-export default function Analytics() {
+export default async  function Analytics() {
   return (
     <div>
       <h1 style={{textAlign:"center"}}>Analytics</h1>

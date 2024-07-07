@@ -10,7 +10,7 @@ async function fetchDB(){
   return data.items;
 }
 
-export function Item({item}:{item:any}) {
+ function Item({item}:{item:any}) {
   return (
     <tr>
       <td>{item.ip}</td>
