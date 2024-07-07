@@ -1,13 +1,19 @@
 
 async function fetchDB(){
-  const response = await fetch(`${process.env.POCKETBASE_URL}api/collections/IP_Details/records`,{cache: "no-cache",headers:{
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${process.env.POCKETBASE_TOKEN}`
-  }});
-  const data = await response.json();
-  console.log(data);
+  try {
+    const response = await fetch(`${process.env.POCKETBASE_URL}api/collections/IP_Details/records`,{cache: "no-cache",headers:{
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${process.env.POCKETBASE_TOKEN}`
+    }});
+    const data = await response.json();
+    console.log(data);
 
-  return data.items;
+    return data.items;
+    
+  } catch (error) {
+    console.error(error);
+  }
+
 }
 
  function Item({item}:{item:any}) {
@@ -51,7 +57,7 @@ async function fetchDB(){
             </tr>
           </thead>
           <tbody>
-            {db?.map((item:any) => <Item key={item.id} item={item}/>)}
+            {db?.length===0?db?.map((item:any) => <Item key={item.id} item={item}/>): <tr><td colSpan={10}>No data</td></tr>}
           </tbody>
         </table>
       </div>
