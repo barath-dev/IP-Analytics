@@ -1,117 +1,123 @@
 import styles from "./style.module.css";
 
+async function getStats() {
+
+  const response = await fetch("https://localhost:4000/stats",
+    {
+      method: 'GET',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    } 
+    const responseData = await response.json();
+    return responseData;
+  }
+
+  //create a table component
+  
+  function Table({ data, title }: { data: Record<string, number>, title: string }) {
+
+    //sort the data in descending order
+    data = Object.keys(data).sort((a, b) => data[b] - data[a]).reduce((acc: any, key: any) => {
+      acc[key] = data[key];
+      return acc;
+    }, {});
+
+    return (
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th className={styles.columnTitle}>{title}</th>
+            <th className={styles.columnCount}>Count</th>
+            <th className={styles.columnPercentage}>Percentage</th>
+          </tr>
+        </thead>
+        <tbody>
+        {Object.keys(data).map((key: any) => (
+        <tr key={key}>
+          <td className={styles.columnTitle}>{key}</td>
+          <td className={styles.columnCount}>{data[key]}</td>
+          <td className={styles.columnPercentage}>{((data[key] / Object.values(data).reduce((a: number, b: number) => a + b)) * 100).toFixed(2)}%</td>
+        </tr>
+      ))}
+        </tbody>
+      </table>
+    );
+  }
 
 export default async  function Analytics() {
 
+  const data = await getStats();
+
+  console.log(data.osStats);
+
   
   return (
-    <div>
+    <div style={{textAlign:"center",alignItems:"center"}}>
       <h1 style={{textAlign:"center"}} className={styles.test}>Analytics</h1>
         <div className={styles.container}>
-          <div>
-            <h2>Country Analytics</h2>
+            <h2>OverAll Analytics</h2>
             <p>View the analytics of the visitors by country</p>
-            <table>
-          <thead>
-            <tr>
-              <th>Country</th>
-              <th>Count</th>
-              <th>Percentage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {Object.keys(countryStats).map((key: any) => <tr key={key}>
-              <td>{key}</td>
-              <td>{countryStats[key]}</td>
-              <td>{((countryStats[key] / data.length) * 100).toFixed(2)}%</td>
-            </tr>)} */}
-          </tbody>
-        </table>
+        <div className={styles.div}>
+          <table className={styles.table}> {/* Add the class name here */}
+            <thead>
+              <tr>
+                <th>Overall Stats</th>
+                <th>Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(data.overallStats).map((key: any) => (
+                <tr key={key}>
+                  <td>{key}</td>
+                  <td>{data.overallStats[key]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
         <div>
-        <h2>Organisation Analytics</h2>
-        <p>View the analytics of the visitors by country</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Organisation</th>
-              <th>Count</th>
-              <th>Percentage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {Object.keys(orgStats).map((key: any) => <tr key={key}>
-              <td>{key}</td>
-              <td>{orgStats[key]}</td>
-              <td>{((orgStats[key] / data.length) * 100).toFixed(2)}%</td>
-            </tr>)} */}
-          </tbody>
-        </table>
-        </div>
-        <div>
-        <h2>Os Analytics</h2>
-        <p>View the analytics of the visitors by country</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Country</th>
-              <th>Count</th>
-              <th>Percentage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {db?.length===0?db?.map((item:any) => <Item key={item.id} item={item}/>): <tr><td colSpan={10}>No data</td></tr>} */}
-          </tbody>
-        </table>
-        </div>
-        <div>
-        <h2>Country Analytics</h2>
-        <p>View the analytics of the visitors by country</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Country</th>
-              <th>Count</th>
-              <th>Percentage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {db?.length===0?db?.map((item:any) => <Item key={item.id} item={item}/>): <tr><td colSpan={10}>No data</td></tr>} */}
-          </tbody>
-        </table>
-        </div>
-        <div>
-        <h2>Country Analytics</h2>
-        <p>View the analytics of the visitors by country</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Country</th>
-              <th>Count</th>
-              <th>Percentage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {db?.length===0?db?.map((item:any) => <Item key={item.id} item={item}/>): <tr><td colSpan={10}>No data</td></tr>} */}
-          </tbody>
-        </table>
-        </div>
-          <div>
           <h2>Country Analytics</h2>
           <p>View the analytics of the visitors by country</p>
-          <table>
-          <thead>
-            <tr>
-              <th>Country</th>
-              <th>Count</th>
-              <th>Percentage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {db?.length===0?db?.map((item:any) => <Item key={item.id} item={item}/>): <tr><td colSpan={10}>No data</td></tr>} */}
-          </tbody>
-        </table>
+          <div className={styles.div}>
+          <Table data={data.countryStats} title="Country" />
+          </div>
         </div>
+        <div>
+          <h2>Org Analytics</h2>
+          <p>View the analytics of the visitors by organization</p>
+          <div className={styles.div}>
+          <Table data={data.orgStats} title="Organization"/>
+          </div>
+        </div>
+        <div>
+          <h2>Browser Analytics</h2>
+          <p>View the analytics of the visitors by browser</p>
+          <div className={styles.div}>
+          <Table data={data.browserStats} title="Browser"/>
+          </div>
+          </div>
+          <div>
+          <h2>OS Analytics</h2>
+          <p>View the analytics of the visitors by OS</p>
+          <div className={styles.div}>
+          <Table data={data.osStats} title="OS"/>
+          </div>
+          </div>
+          <div>
+          <h2>Device Analytics</h2>
+          <p>View the analytics of the visitors by device</p>
+          <div className={styles.div}>
+          <Table data={data.deviceStats} title="Device"/>
+          </div>
+          </div>
+          <div>
+          </div>
       </div>
     </div>
   );

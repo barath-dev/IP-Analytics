@@ -1,39 +1,44 @@
-// async function fetchDB(){
-//   try {
-//     const response = await fetch(`${process.env.POCKETBASE_URL}api/collections/IP_Details/records`,{cache: "no-cache",headers:{
-//       "Content-Type": "application/json",
-//       "Authorization": `Bearer ${process.env.POCKETBASE_TOKEN}`
-//     }});
-//     const data = await response.json();
 
-//     return data.items;
-    
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
 
-//  function Item({item}:{item:any}) {
-//   return (
-//     <tr>
-//       <td>{item.ip}</td>
-//       <td>{item.city}</td>
-//       <td>{item.region}</td>
-//       <td>{item.country}</td>
-//       <td>{item.postal}</td>
-//       <td>{item.latitude}</td>
-//       <td>{item.longitude}</td>
-//       <td>{item.timezone}</td>
-//       <td>{item.org}</td>
-//       <td>{item.visit_count}</td>
-//     </tr>
-//   );
-// }
+async function fetchDb() {
+    const response = await fetch("https://localhost:4000/records",
+    {
+      method: 'GET',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const responseData = await response.json();
+
+    return responseData;
+}
+
+function Item({ data }: { data: any }) {
+  return (
+    <tr>
+      <td>{data.ip}</td>
+      <td>{data.city}</td>
+      <td>{data.region}</td>
+      <td>{data.country}</td>
+      <td>{data.postal}</td>
+      <td>{data.latitude}</td>
+      <td>{data.longitude}</td>
+      <td>{data.timezone}</td>
+      <td>{data.org}</td>
+      <td>{data.visit_count}</td>
+    </tr>
+  );
+}
   
-  export default async function Home() {
-  
-    // const db  = await fetchDB();
-    // console.log(db);
+export default async function Home() {
+
+  const data = await fetchDb();
 
     return (
       <div>
@@ -55,7 +60,9 @@
             </tr>
           </thead>
           <tbody>
-            {/* {db?.length!==0?db?.map((item:any) => <Item key={item.id} item={item}/>): <tr><td colSpan={10}>No data</td></tr>} */}
+            {data.map((item: any) => (
+              <Item key={item.ip} data={item} />
+            ))}
           </tbody>
         </table>
       </div>

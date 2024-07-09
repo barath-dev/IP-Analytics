@@ -1,9 +1,84 @@
-.table, .th, .td {
-    border: 1px solid black;
+.table {
     border-collapse: collapse;
+    width: 60%;
+  }
+  
+  .table th, .table td {
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .table th {
+    background-color: #f2f2f2;
+  }
+
+  .columnTitle {
+    width: 30%; /* Adjust as needed */
+  }
+  
+  .columnCount {
+    width: 30%; /* Adjust as needed */
+  }
+  
+  .columnPercentage {
+    width: 40%; /* Adjust as needed */
+  }
+
+.div{
+    display: flex;
+    justify-content: center;
+    height: auto;
+}  
+
+  /* Import Google Font */
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); */
+/* 
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  background-color: #f8f9fa;
 }
 
+h1, h2, p {
+  margin: 0 0 20px 0;
+}
+
+h1 {
+  color: #007BFF;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+h2 {
+  color: #6C757D;
+  font-size: 1.75rem;
+}
+
+p {
+  color: #6C757D;
+  font-size: 1rem;
+} */
+
 .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+
+.table th, .table td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.table th {
+  background-color: #007BFF;
+  color: white;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
