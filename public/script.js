@@ -196,7 +196,7 @@ async function fetchData() {
 
   const data = getBrowserInfo();
 
-  const response = await fetch("http://192.168.235.56:3000/", {
+  const response = await fetch("https://192.168.235.56:3000/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
