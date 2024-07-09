@@ -1,7 +1,7 @@
 
-
+const BASEURL = "https://ip-analytics-backend.onrender.com"
 async function fetchDb() {
-    const response = await fetch("https://localhost:4000/records",
+    const response = await fetch(`${BASEURL}/records`,
     {
       method: 'GET',
       cache: 'no-cache',
@@ -60,7 +60,8 @@ export default async function Home() {
             </tr>
           </thead>
           <tbody>
-            {data.map((item: any) => (
+            {data.length === 0 ? ( <tr style={{textAlign:"center",fontSize:"32px"}}><td colSpan={10}>No data</td></tr>):
+             data.map((item: any) => (
               <Item key={item.ip} data={item} />
             ))}
           </tbody>

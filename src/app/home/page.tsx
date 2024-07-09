@@ -1,8 +1,10 @@
 import styles from "./style.module.css";
 
+
+const BASEURL = "https://ip-analytics-backend.onrender.com"
 async function getStats() {
 
-  const response = await fetch("https://localhost:4000/stats",
+  const response = await fetch(`${BASEURL}/stats`,
     {
       method: 'GET',
       cache: 'no-cache',
@@ -11,14 +13,14 @@ async function getStats() {
       },
     });
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch data');
-    } 
+    console.log(response);
+
+   
     const responseData = await response.json();
+
     return responseData;
   }
 
-  //create a table component
   
   function Table({ data, title }: { data: Record<string, number>, title: string }) {
 
@@ -38,7 +40,8 @@ async function getStats() {
           </tr>
         </thead>
         <tbody>
-        {Object.keys(data).map((key: any) => (
+          { Object.keys(data).length === 0 && data.constructor === Object ? <tr><td colSpan={3}>No data available</td></tr>:
+         Object.keys(data).map((key: any) => (
         <tr key={key}>
           <td className={styles.columnTitle}>{key}</td>
           <td className={styles.columnCount}>{data[key]}</td>
