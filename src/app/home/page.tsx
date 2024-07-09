@@ -1,37 +1,7 @@
 import styles from "./style.module.css";
 
-async function fetchDB() {
-  try {
-    const response = await fetch(`${process.env.POCKETBASE_URL}api/collections/IP_Details/records`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.POCKETBASE_TOKEN}`,
-      },
-      cache: "no-cache",
-    });
-    const data = await response.json();
-
-
-    
-    return data.items;
-  }
-  catch (error) {
-    console.error(error);
-  }
-}
 
 export default async  function Analytics() {
-
-  const data = await fetchDB();
-  const countryStats = data.reduce((acc: any, item: any) => {
-    acc[item.country] = acc[item.country] ? acc[item.country] + item.visit_count : 1;
-    return acc;
-  }, {});
-
-  const orgStats = data.reduce((acc: any, item: any) => {
-    acc[item.org] = acc[item.org] ? acc[item.org] + 1 : 1;
-    return acc;
-  }, {});
 
   
   return (
@@ -50,11 +20,11 @@ export default async  function Analytics() {
             </tr>
           </thead>
           <tbody>
-            {Object.keys(countryStats).map((key: any) => <tr key={key}>
+            {/* {Object.keys(countryStats).map((key: any) => <tr key={key}>
               <td>{key}</td>
               <td>{countryStats[key]}</td>
               <td>{((countryStats[key] / data.length) * 100).toFixed(2)}%</td>
-            </tr>)}
+            </tr>)} */}
           </tbody>
         </table>
         </div>
@@ -70,11 +40,11 @@ export default async  function Analytics() {
             </tr>
           </thead>
           <tbody>
-            {Object.keys(orgStats).map((key: any) => <tr key={key}>
+            {/* {Object.keys(orgStats).map((key: any) => <tr key={key}>
               <td>{key}</td>
               <td>{orgStats[key]}</td>
               <td>{((orgStats[key] / data.length) * 100).toFixed(2)}%</td>
-            </tr>)}
+            </tr>)} */}
           </tbody>
         </table>
         </div>
