@@ -1,7 +1,7 @@
 import styles from "./style.module.css";
 
 
-const BASEURL = "http:localhost/4000"
+const BASEURL = "https://ip-analytics-backend.onrender.com"
 async function getStats() {
 
   const response = await fetch(`${BASEURL}/stats`,
