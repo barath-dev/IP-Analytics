@@ -1,5 +1,5 @@
 
-const BASEURL = "https://ip-analytics-backend.onrender.com"
+const BASEURL = "http://localhost:4000"
 async function fetchDb() {
     const response = await fetch(`${BASEURL}/records`,
     {

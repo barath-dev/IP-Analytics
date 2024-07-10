@@ -67,7 +67,7 @@ async function fetchData() {
 
   const data = getBrowserInfo();
 
-  const response = await fetch("https://ip-analytics-backend.onrender.com/", {
+  const response = await fetch("http://localhost:4000/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
