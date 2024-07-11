@@ -10,32 +10,36 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html>
-            <head>
-               <link  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
-            </head>
-            <body>
-                <main>
-                  <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <a className="navbar-brand" href="#">IP Analytics</a>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                      <span className="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav mr-auto">
-                      <li className="nav-item ">
-                        <a className="nav-link" href="/home">Home <span className="sr-only">(current)</span></a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" href="/site-history">Site History</a>
-                      </li>
-                    </ul>
-                    </div>
-                  </nav>
-                  {children}
-                </main>
-            </body>
-        </html>
+      <html>
+      <head>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+      </head>
+      <body>
+        <main>
+          <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div className="container-fluid">
+              <a className="navbar-brand" href="#">IP Analytics</a>
+              <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+              </button>
+      
+              <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul className="navbar-nav mr-auto">
+                  <li className="nav-item ">
+                    <a className="nav-link" href="/home">Home <span className="sr-only">(current)</span></a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/site-history">Site History</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          {children}
+        </main>
+      </body>
+      </html>
     );
 }

@@ -63,7 +63,7 @@ function getBrowserInfo() {
 
 
 
-async function fetchData() {
+async function putData() {
 
   const data = getBrowserInfo();
 
@@ -82,5 +82,5 @@ async function fetchData() {
   console.log(await response); // Assuming the response is JSON
 }
 
-fetchData();
+putData();
 
