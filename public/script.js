@@ -62,6 +62,8 @@ function getBrowserInfo() {
 
 
 
+console.log("refferer : "+ document.referrer);
+
 
 async function putData() {
 
